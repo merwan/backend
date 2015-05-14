@@ -1,6 +1,6 @@
 require "json"
 require 'date'
-require_relative 'lib/duration_policy'
+require_relative 'lib/price_calculator'
 
 class Car
   attr_reader :id
@@ -29,19 +29,6 @@ class Rental
 
   def duration
     @end_date.mjd - @start_date.mjd + 1
-  end
-end
-
-class PriceCalculator
-  def initialize(duration_policy = DurationPolicy.new)
-    @duration_policy = duration_policy
-  end
-
-  def calculate(rental, car)
-    distance_price = rental.distance * car.price_per_km
-    duration_price = @duration_policy.calculate(rental.duration, car.price_per_day)
-
-    return duration_price + distance_price
   end
 end
 

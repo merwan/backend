@@ -55,13 +55,13 @@ data = JSON.load(file)
 cars = read_cars(data)
 rentals = read_rentals(data)
 
+calculator = PriceCalculator.new
 output_rentals = []
 rentals.each do |rental|
   car_index = cars.index { |car| car.id == rental.car_id }
   rental_car = cars[car_index]
-  calculator = PriceCalculator.new
   price = calculator.calculate(rental, rental_car)
-  output_rentals << {id: rental.id, price: price.to_i}
+  output_rentals << {id: rental.id, price: price}
 end
 
 output = {rentals: output_rentals}

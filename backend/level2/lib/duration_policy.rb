@@ -31,14 +31,14 @@ class DurationPolicy
   end
 
   def discount_10_percent(duration)
-    @price_per_day * duration * 0.9
+    @price_per_day * duration * 9 / 10
   end
 
   def discount_30_percent(duration)
-    @price_per_day * duration * 0.7
+    @price_per_day * duration * 7 / 10
   end
 
   def discount_50_percent(duration)
-    @price_per_day * duration * 0.5
+    @price_per_day * duration * 5 / 10
   end
 end

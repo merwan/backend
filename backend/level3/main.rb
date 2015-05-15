@@ -1,6 +1,7 @@
 require "json"
 require 'date'
 require_relative 'lib/price_calculator'
+require_relative 'lib/commission_calculator'
 
 class Car
   attr_reader :id
@@ -56,12 +57,23 @@ cars = read_cars(data)
 rentals = read_rentals(data)
 
 output_rentals = []
+calculator = PriceCalculator.new
+commission_calculator = CommissionCalculator.new
+
 rentals.each do |rental|
   car_index = cars.index { |car| car.id == rental.car_id }
   rental_car = cars[car_index]
-  calculator = PriceCalculator.new
+
   price = calculator.calculate(rental, rental_car)
-  output_rentals << {id: rental.id, price: price.to_i}
+
+  fee = commission_calculator.calculate(rental.duration, price)
+  commission = {
+    insurance_fee: fee.insurance,
+    assistance_fee: fee.assistance,
+    drivy_fee: fee.drivy
+  }
+
+  output_rentals << {id: rental.id, price: price, commission: commission}
 end
 
 output = {rentals: output_rentals}

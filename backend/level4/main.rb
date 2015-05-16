@@ -14,7 +14,7 @@ class Car
 end
 
 class Rental
-  attr_reader :id, :car_id, :distance
+  attr_reader :id, :car_id, :distance, :deductible_reduction
 
   def initialize(hash)
     @id = hash['id']
@@ -22,6 +22,7 @@ class Rental
     @start_date = Date.parse hash['start_date']
     @end_date = Date.parse hash['end_date']
     @distance = hash['distance']
+    @deductible_reduction = hash['deductible_reduction']
   end
 
   def duration
@@ -56,6 +57,12 @@ output_rentals = []
 calculator = PriceCalculator.new
 commission_calculator = CommissionCalculator.new
 
+def calculate_deductible_reduction(rental)
+  return 0 unless rental.deductible_reduction
+
+  return rental.duration * 400
+end
+
 rentals.each do |rental|
   car_index = cars.index { |car| car.id == rental.car_id }
   rental_car = cars[car_index]
@@ -69,7 +76,14 @@ rentals.each do |rental|
     drivy_fee: fee.drivy
   }
 
-  output_rentals << {id: rental.id, price: price, commission: commission}
+  reduction = calculate_deductible_reduction(rental)
+  options = {deductible_reduction: reduction}
+  output_rentals << {
+    id: rental.id,
+    price: price,
+    options: options,
+    commission: commission
+  }
 end
 
 output = {rentals: output_rentals}

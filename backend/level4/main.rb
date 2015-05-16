@@ -4,11 +4,9 @@ require_relative 'lib/price_calculator'
 require_relative 'lib/commission_calculator'
 
 class Car
-  attr_reader :id
-  attr_reader :price_per_km
-  attr_reader :price_per_day
+  attr_reader :id, :price_per_km, :price_per_day
 
-  def initialize hash
+  def initialize(hash)
     @id = hash['id']
     @price_per_day = hash['price_per_day']
     @price_per_km = hash['price_per_km']
@@ -16,11 +14,9 @@ class Car
 end
 
 class Rental
-  attr_reader :id
-  attr_reader :car_id
-  attr_reader :distance
+  attr_reader :id, :car_id, :distance
 
-  def initialize hash
+  def initialize(hash)
     @id = hash['id']
     @car_id = hash['car_id']
     @start_date = Date.parse hash['start_date']

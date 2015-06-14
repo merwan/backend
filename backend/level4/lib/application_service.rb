@@ -5,5 +5,6 @@ class ApplicationService
 
   def calculate_rentals(filename)
     @data_reader.get_cars(filename)
+    @data_reader.get_rentals(filename)
   end
 end

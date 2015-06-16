@@ -1,9 +1,13 @@
-class DurationPolicy
-  def calculate(duration, price_per_day)
-    @price_per_day = price_per_day
+class PriceProcessor
+  def process(rental)
+    @price_per_day = rental.price_per_day
+    duration = rental.duration
     total = 0
 
-    return 0 if duration == 0
+    if duration == 0
+      rental.price = 0
+      return
+    end
 
     days_above_10 = duration - 10
     if days_above_10 > 0
@@ -24,6 +28,8 @@ class DurationPolicy
     end
 
     total += price_for_one_day
+
+    rental.price = total
   end
 
   def price_for_one_day

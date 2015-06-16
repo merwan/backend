@@ -1,6 +1,7 @@
 class ApplicationService
-  def initialize(data_reader, processors)
+  def initialize(data_reader, data_writer, processors)
     @data_reader = data_reader
+    @data_writer = data_writer
     @processors = processors
   end
 
@@ -9,5 +10,6 @@ class ApplicationService
     rentals.each do |rental|
       rental.process(@processors)
     end
+    @data_writer.write_rentals(rentals)
   end
 end

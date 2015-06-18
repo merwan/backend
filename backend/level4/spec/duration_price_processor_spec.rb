@@ -11,7 +11,7 @@ RSpec.describe DurationPriceProcessor do
     return rental
   end
 
-  it 'cost 0 for 0 days rental' do
+  it 'costs 0 for 0 days rental' do
     rental = create_rental(0, 100)
     subject.process(rental)
     expect(rental.price).to eq(0)

@@ -1,8 +1,8 @@
-require 'price_processor'
+require 'duration_price_processor'
 require 'rental'
 
-RSpec.describe PriceProcessor do
-  subject { PriceProcessor.new }
+RSpec.describe DurationPriceProcessor do
+  subject { DurationPriceProcessor.new }
 
   def create_rental(duration, price_per_day)
     rental = Rental.new

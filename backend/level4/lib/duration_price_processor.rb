@@ -1,4 +1,4 @@
-class PriceProcessor
+class DurationPriceProcessor
   def process(rental)
     @price_per_day = rental.price_per_day
     duration = rental.duration
@@ -29,7 +29,7 @@ class PriceProcessor
 
     total += price_for_one_day
 
-    rental.price = total
+    rental.price += total
   end
 
   def price_for_one_day

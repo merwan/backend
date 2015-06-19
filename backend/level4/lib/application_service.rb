@@ -1,15 +1,17 @@
 class ApplicationService
-  def initialize(data_reader, data_writer, processors)
-    @data_reader = data_reader
-    @data_writer = data_writer
+  def initialize(serializer, rental_adapter, processors)
+    @serializer = serializer
+    @rental_adapter = rental_adapter
     @processors = processors
   end
 
-  def calculate_rentals(filename)
-    rentals = @data_reader.get_rentals(filename)
+  def calculate_rentals(input, output)
+    data = @serializer.read(input)
+    rentals = @rental_adapter.from_hash(data)
     rentals.each do |rental|
       rental.process(@processors)
     end
-    @data_writer.write_rentals(rentals)
+    data = @rental_adapter.to_hash(rentals)
+    @serializer.write(output, data)
   end
 end

@@ -19,4 +19,13 @@ RSpec.describe JsonSerializer do
 
     expect(data_from_file).to eq(data)
   end
+
+  it 'writes hash to file' do
+    original_data = subject.read('data.json')
+    subject.write('data_output.json', original_data)
+    processed_data = subject.read('data_output.json')
+    File.delete('data_output.json')
+
+    expect(processed_data).to eq(original_data)
+  end
 end

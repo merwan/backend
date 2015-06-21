@@ -28,4 +28,11 @@ RSpec.describe DistancePriceProcessor do
     subject.process(rental)
     expect(rental.price).to eq(20000)
   end
+
+  it 'adds the price to the existing rental price' do
+    rental = create_rental(500, 40)
+    rental.price = 1
+    subject.process(rental)
+    expect(rental.price).to eq(20001)
+  end
 end

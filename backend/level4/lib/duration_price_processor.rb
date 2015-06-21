@@ -5,7 +5,6 @@ class DurationPriceProcessor
     total = 0
 
     if duration == 0
-      rental.price = 0
       return
     end
 

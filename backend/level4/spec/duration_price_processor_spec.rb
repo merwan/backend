@@ -17,10 +17,24 @@ RSpec.describe DurationPriceProcessor do
     expect(rental.price).to eq(0)
   end
 
+  it 'does not change existing price for 0 days rental' do
+    rental = create_rental(0, 100)
+    rental.price = 100
+    subject.process(rental)
+    expect(rental.price).to eq(100)
+  end
+
   it 'does not discount anything for 1 day rental' do
     rental = create_rental(1, 100)
     subject.process(rental)
     expect(rental.price).to eq(100)
+  end
+
+  it 'adds price to existing price' do
+    rental = create_rental(1, 100)
+    rental.price = 100
+    subject.process(rental)
+    expect(rental.price).to eq(200)
   end
 
   it 'discounts 10% on second day for 2 days rental' do
